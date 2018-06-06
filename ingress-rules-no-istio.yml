@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: web-gateway-svc-ingress-no-istio
+  namespace: ngci
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /data
+        backend:
+          serviceName: web-gateway-service
+          servicePort: 8080
