@@ -1,0 +1,20 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ngci-virtual-service
+  namespace: ngci
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - ngci-gateway
+  http:
+  - match:
+    - uri:
+        exact: /data
+    route:
+    - destination:
+        host: web-gateway-service
+        port:
+          number: 7080
