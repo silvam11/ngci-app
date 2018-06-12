@@ -9,5 +9,8 @@ kubectl apply -f <(istioctl kube-inject -f deployments.yml)
 #create/apply services
 kubectl apply -f services.yml
 
-#create/apply ingress rules
-kubectl apply -f ingress-rules-istio.yml
+#create/apply gateway rules
+kubectl apply -f ngci-gateway.yml
+
+#create/apply virtual service rules
+kubectl apply -f ngci-virtual-service.yml

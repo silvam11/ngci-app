@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-#delete ingress rules
-kubectl delete -f ingress-rules-istio.yml
+#delete virtual service rules
+kubectl delete -f ngci-virtual-service.yml
+
+#delete gateway rules
+kubectl delete -f ngci-gateway.yml
 
 #delete services
 kubectl delete -f services.yml
