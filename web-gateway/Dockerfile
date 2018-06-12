@@ -6,3 +6,4 @@ COPY web-gateway.go ${GOPATH}/web-gateway/
 RUN go build -o web-gateway .
 RUN apk --no-cache add ca-certificates
 CMD [ "./web-gateway" ]
+

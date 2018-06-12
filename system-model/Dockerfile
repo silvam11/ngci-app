@@ -6,3 +6,4 @@ COPY system-model.go ${GOPATH}/system-model/
 RUN go build -o system-model .
 RUN apk --no-cache add ca-certificates
 CMD [ "./system-model" ]
+
