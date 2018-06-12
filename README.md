@@ -9,7 +9,7 @@ The steps described here assume that:
 3. Git is installed.
 4. All the scripts mentioned on these instructions have to the executables.
 
-##Deploy code form git repo
+## Deploy code form git repo
 To get access to this code, please run the following command
 
 ```
@@ -22,7 +22,7 @@ The previously command creates a folder named ngci-app under the current directo
 cd ngci-app
 ```
 
-##Create docker images
+## Create docker images
 
 This project provides to docker images which are created running the script:
 
@@ -30,14 +30,14 @@ This project provides to docker images which are created running the script:
 ./create-docker-images.sh
 ```
 
-##Deploy the demo application
+## Deploy the demo application
 
 To deploy the demo application, run the command below.
 
 ```
 ./setup.sh
 ```
-##Clean the environment
+## Clean the environment
 
 After using this application, the kubernetes environment can be cleaned using the following command:
 
