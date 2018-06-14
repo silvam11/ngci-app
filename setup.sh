@@ -9,8 +9,10 @@ kubectl apply -f <(istioctl kube-inject -f deployments.yml)
 #create/apply services
 kubectl apply -f services.yml
 
-##create/apply gateway rules
+#create/apply gateway rules
 istioctl create -f ngci-gateway.yml
-#
-##create/apply virtual service rules
+
+#create/apply virtual service rules
 istioctl create -f ngci-virtual-service.yml
+
+kubectl create -n istio-system secret tls istio-ingressgateway-certs --key /etc/istio/ingressgateway-certs/tls.key --cert /etc/istio/ingressgateway-certs/tls.crt

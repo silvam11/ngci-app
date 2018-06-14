@@ -6,7 +6,7 @@ metadata:
   namespace: ngci
 spec:
   hosts:
-  - "*"
+  - "ngci.localdomain"
   gateways:
   - ngci-gateway
   http:
