@@ -14,7 +14,3 @@ ls -laR ..
 cp $SERVICE_NAME ../binaries
 # cp version.txt ../binaries
 cp Dockerfile ../binaries
-chmod 777 ../binaries/Dockerfile
-if [ ! -f ../binaries/Dockerfile ]; then
-  echo "It doesn't appear that given Dockerfile is a file joe"
-fi

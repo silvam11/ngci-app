@@ -29,7 +29,7 @@ resources:
 #  source:
 #    server: https://192.168.99.100:8443
 #    namespace: default
-#    token: ((k8s-token))
+#    token: k8s-token))
 #    certificate_authority: ((k8s-certificate))
 
 - name: web-gateway-image

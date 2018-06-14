@@ -1,4 +1,4 @@
 FROM scratch
-EXPOSE 8080
 ADD web-gateway .
-CMD ["./web-gateway"]
+EXPOSE 8080
+CMD ["/web-gateway"]
