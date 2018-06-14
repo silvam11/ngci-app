@@ -32,11 +32,17 @@ resources:
 #    token: {{k8s-token}}
 #    certificate_authority: {{k8s-certificate}}
 
-#- name: test-image
-#  type: docker-image
-#  source:
-#    repository: ngci/web-gateway:0.1
-#    insecure_registries: [ "192.168.99.100:5000" ]
+- name: web-gateway-image
+  type: docker-image
+  source:
+    repository: ngci/web-gateway:0.1
+    insecure_registries: [ "192.168.99.100:5000" ]
+
+- name: system-model-image
+  type: docker-image
+  source:
+    repository: ngci/system-model:0.1
+    insecure_registries: [ "192.168.99.100:5000" ]
 
 jobs:
 # Unit tests need to be written
@@ -49,7 +55,7 @@ jobs:
   # - task: unittests
     # file: skeleton/task_run_tests.yml
 
-- name: job-build-deploy
+- name: job-build-web-gateway
   public: true
   serial: true
   plan:
@@ -60,9 +66,24 @@ jobs:
     params:
       SERVICE_NAME: web-gateway
     file: skeleton/ci_tasks/task_build_executable.yml
-#  - put: test-image
-#    params:
-#      build: binaries
+  - put: web-gateway-image
+    params:
+      build: binaries
+
+- name: job-build-system-model
+  public: true
+  serial: true
+  plan:
+  - get: skeleton
+    # passed: [job-unit-test]
+    trigger: true
+  - task: buildexecutable
+    params:
+      SERVICE_NAME: system-model
+    file: skeleton/ci_tasks/task_build_executable.yml
+  - put: system-model-image
+    params:
+      build: binaries
 #  - put: k8s
 #    params:
 #      kubectl: run web-gateway --image=ngci/web-gateway:0.1
