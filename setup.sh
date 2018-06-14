@@ -15,4 +15,8 @@ istioctl create -f ngci-gateway.yml
 #create/apply virtual service rules
 istioctl create -f ngci-virtual-service.yml
 
-kubectl create -n istio-system secret tls istio-ingressgateway-certs --key /etc/istio/ingressgateway-certs/tls.key --cert /etc/istio/ingressgateway-certs/tls.crt
+#Create a secret
+#kubectl create -n istio-system secret tls istio-ingressgateway-certs --key /etc/istio/ingressgateway-certs/tls.key --cert /etc/istio/ingressgateway-certs/tls.crt
+
+#Create a service entry
+istioctl create -f ngci-service-entry.yml

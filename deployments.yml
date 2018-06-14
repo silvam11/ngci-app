@@ -16,7 +16,11 @@ spec:
         - name: SYSTEM_STANDARDS_SERVICE_URL
           value: http://system-standards-service:9090
         - name: AWX_URL
-          value: http://system-standards-service:9090
+          value: http://10.239.133.82:80
+        - name: AWX_USERNAME
+          value: admin
+        - name: AWX_PASSWORD
+          value: password
         name: vrealize-controller
         image: ngci/vrealize-controller:0.1
         imagePullPolicy: Never

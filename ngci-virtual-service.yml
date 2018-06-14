@@ -13,6 +13,8 @@ spec:
   - match:
     - uri:
         exact: /data
+    - uri:
+        exact: /install
     route:
     - destination:
         host: vrealize-controller-service

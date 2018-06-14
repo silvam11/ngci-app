@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+#Create a service entry
+istioctl delete -f ngci-service-entry.yml
+
 ##delete virtual service rules
 istioctl delete -f ngci-virtual-service.yml
 #

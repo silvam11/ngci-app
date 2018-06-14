@@ -37,10 +37,18 @@ func getData(w http.ResponseWriter, r *http.Request) {
 func installSuite(w http.ResponseWriter, r *http.Request) {
 	log.Println("Installing vRealize suite ...")
 
-	awxUrl := os.Getenv("AWX_URL")
+	awxUsername := os.Getenv("AWX_USERNAME")
+	awxPassword := os.Getenv("AWX_PASSWORD")
 
-	log.Println("Ready to install vrealize suite ", awxUrl)
-	resp, err := http.Get(awxUrl)
+	awxUrl := os.Getenv("AWX_URL")
+	awxEndpoint := awxUrl + "/api/v2/users/"
+
+	log.Println("Ready to install vrealize suite ", awxEndpoint)
+	//resp, err := http.Get(awxEnpoint)
+	req, err := http.NewRequest("GET", awxEndpoint, nil)
+	req.SetBasicAuth(awxUsername, awxPassword)
+	cli := &http.Client{}
+	resp, err := cli.Do(req)
 	if err != nil {
 		log.Fatal("HTTP ERROR: %s ", err)
 		panic(err)
