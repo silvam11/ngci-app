@@ -1,0 +1,124 @@
+---
+#resource_types:
+#- name: kubernetes
+#  type: docker-image
+#  source:
+#    repository: zlabjp/kubernetes-resource
+#    tag: "1.9"
+
+
+resources:
+- name: skeleton
+  type: git
+  source:
+    uri: https://github.com/silvam11/ngci-app
+    branch: russed5-update
+    skip_ssl_verification: true
+
+# - name: resource-pytest
+  # type: git
+  # source:
+    # uri: https://eos2git.cec.lab.emc.com/VCE-Symphony/revere-seed3-papp
+    # branch: master
+    # username: ((RegistryUser))
+    # password: ((RegistryPass))
+    # skip_ssl_verification: true
+
+#- name: k8s
+#  type: kubernetes
+#  source:
+#    server: https://192.168.99.100:8443
+#    namespace: default
+#    token: {{k8s-token}}
+#    certificate_authority: {{k8s-certificate}}
+
+#- name: test-image
+#  type: docker-image
+#  source:
+#    repository: ngci/web-gateway:0.1
+#    insecure_registries: [ "192.168.99.100:5000" ]
+
+jobs:
+# Unit tests need to be written
+# - name: job-unit-test
+  # public: true
+  # serial: true
+  # plan:
+  # - get: skeleton
+    # trigger: true
+  # - task: unittests
+    # file: skeleton/task_run_tests.yml
+
+- name: job-build-deploy
+  public: true
+  serial: true
+  plan:
+  - get: skeleton
+    # passed: [job-unit-test]
+    trigger: true
+  - task: buildexecutable
+    params:
+      SERVICE_NAME: web-gateway
+    file: skeleton/ci_tasks/task_build_executable.yml
+#  - put: test-image
+#    params:
+#      build: binaries
+#  - put: k8s
+#    params:
+#      kubectl: run web-gateway --image=ngci/web-gateway:0.1
+#      wait_until_ready: 90
+#      #wait_until_ready_selector: app=test
+#    on_failure:
+#      put: k8s
+#      params:
+#        kubectl: delete deploy web-gateway
+#  - put: k8s
+#    params:
+#      kubectl: expose deploy test --port=80 --target-port=8080
+#    on_failure:
+#      put: k8s
+#      params:
+#        kubectl: delete svc test
+#
+#- name: job-integration-test
+#  public: true
+#  serial: true
+#  plan:
+#  - get: gitlab_repo
+#    passed: [job-build-deploy]
+#    trigger: true
+#  - task: tests
+#    file: gitlab_repo/ci/task_run_integration_tests.yml
+#    ensure:
+#      do:
+#      - put: k8s
+#        params:
+#          kubectl: delete deploy test
+#      - put: k8s
+#        params:
+#          kubectl: delete svc test
+
+
+# - name: test1
+  # public: true
+  # plan:
+  # - get: resource-pytest
+    # trigger: true
+  # - task: test1task1
+    # params:
+      # TEST_SUITE_NAME: SampleCode
+      # TEST_SUITE_TYPE: ((test-suite-type))
+      # TEST_ENV: ((test-environment))
+    # file: resource-pytest/integtest.yml
+
+# - name: test2
+  # public: true
+  # plan:
+  # - get: resource-pytest
+    # passed: [test1]
+    # trigger: true
+  # - task: test2task1
+    # params:
+      # TEST_SUITE: ((test-suite))
+      # TEST_ENV: ((test-environment))
+    # file: resource-pytest/integtest.yml
