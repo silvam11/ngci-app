@@ -2,19 +2,23 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: web-gateway
+  name: vrealize-controller
   namespace: ngci
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: web-gateway
+        app: vrealize-controller
     spec:
       containers:
       - env:
-        name: web-gateway
-        image: ngci/web-gateway:0.1
+        - name: SYSTEM_STANDARDS_SERVICE_URL
+          value: http://system-standards-service:9090
+        - name: AWX_URL
+          value: http://system-standards-service:9090
+        name: vrealize-controller
+        image: ngci/vrealize-controller:0.1
         imagePullPolicy: Never
         ports:
           - containerPort: 8080
@@ -23,19 +27,61 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: system-model
+  name: system-standards
   namespace: ngci
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: system-model
+        app: system-standards
     spec:
       containers:
       - env:
-        name: system-model
-        image: ngci/system-model:0.1
+        name: system-standards
+        image: ngci/system-standards:0.1
         imagePullPolicy: Never
         ports:
-          - containerPort: 9080
+          - containerPort: 9090
+
+#---
+#apiVersion: extensions/v1beta1
+#kind: Deployment
+#metadata:
+#  name: web-gateway
+#  namespace: ngci
+#spec:
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        app: web-gateway
+#    spec:
+#      containers:
+#      - env:
+#        name: web-gateway
+#        image: ngci/web-gateway:0.1
+#        imagePullPolicy: Never
+#        ports:
+#          - containerPort: 8080
+
+#---
+#apiVersion: extensions/v1beta1
+#kind: Deployment
+#metadata:
+#  name: system-model
+#  namespace: ngci
+#spec:
+#  replicas: 1
+#  template:
+#    metadata:
+#      labels:
+#        app: system-model
+#    spec:
+#      containers:
+#      - env:
+#        name: system-model
+#        image: ngci/system-model:0.1
+#        imagePullPolicy: Never
+#        ports:
+#          - containerPort: 9080

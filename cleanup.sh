@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-#delete virtual service rules
-kubectl delete -f ngci-virtual-service.yml
-
-#delete gateway rules
-kubectl delete -f ngci-gateway.yml
+##delete virtual service rules
+istioctl delete -f ngci-virtual-service.yml
+#
+##delete gateway rules
+istioctl delete -f ngci-gateway.yml
 
 #delete services
 kubectl delete -f services.yml
