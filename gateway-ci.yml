@@ -35,13 +35,13 @@ resources:
 - name: web-gateway-image
   type: docker-image
   source:
-    repository: ngci/web-gateway:0.1
+    repository: 192.168.99.100:5000/ngci/web-gateway
     insecure_registries: [ "192.168.99.100:5000" ]
 
 - name: system-model-image
   type: docker-image
   source:
-    repository: ngci/system-model:0.1
+    repository: 192.168.99.100:5000/ngci/system-model
     insecure_registries: [ "192.168.99.100:5000" ]
 
 jobs:
