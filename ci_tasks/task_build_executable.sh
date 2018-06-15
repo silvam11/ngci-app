@@ -14,3 +14,4 @@ ls -laR ..
 cp $SERVICE_NAME ../binaries
 # cp version.txt ../binaries
 cp Dockerfile ../binaries
+ls -la ../binaries
