@@ -11,11 +11,9 @@ cd skeleton/$SERVICE_NAME
 ls -la
 CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' $SERVICE_NAME.go
 ls -laR ..
-cp $SERVICE_NAME ../binaries
+cp $SERVICE_NAME ../../binaries
 # cp version.txt ../binaries
-cp Dockerfile ../binaries
-ls -la ../
-pwd
-ls -la ../../
+cp Dockerfile ../../binaries
+ls -la ../../binaries
 
 
