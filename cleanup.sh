@@ -10,10 +10,10 @@ istioctl delete -f ngci-virtual-service.yml
 istioctl delete -f ngci-gateway.yml
 
 #delete services
-kubectl delete -f services.yml
+kubectl delete -f ngci-services.yml
 
 #delete deployments
-kubectl delete -f deployments.yml
+kubectl delete -f ngci-deployments.yml
 
 #delete namespace
-kubectl delete -f namespace.yml
+kubectl delete -f ngci-namespace.yml

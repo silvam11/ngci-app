@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 
 #create/apply namespace
-kubectl apply -f namespace.yml
+kubectl apply -f ngci-namespace.yml
 
 #create/apply deployments
-kubectl apply -f <(istioctl kube-inject -f deployments.yml)
+kubectl apply -f <(istioctl kube-inject -f ngci-deployments.yml)
+
+#Create an endpoint to AWX
+kubectl create -f ngci-endpoints.yml
 
 #create/apply services
-kubectl apply -f services.yml
+kubectl apply -f ngci-services.yml
 
 #create/apply gateway rules
 istioctl create -f ngci-gateway.yml
