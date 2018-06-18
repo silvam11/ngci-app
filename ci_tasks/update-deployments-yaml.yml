@@ -16,4 +16,5 @@ run:
   args:
   - -exc
   - |
-    istioctl kube-inject -f skeleton/deployment.yml > updated-yaml/deployment_istio.yml
+    istioctl kube-inject -f skeleton/deployments.yml > updated-yaml/deployment_istio.yml
+    ls -lrt updated-yaml
