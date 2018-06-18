@@ -1,0 +1,22 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+    source: {repository: zlabjp/kubernetes-resource, tag: "1.9"}
+
+inputs:
+- name: skeleton
+
+outputs:
+- name: updated-yaml
+
+run:
+  path: sh
+  args:
+  - -exc
+  - |
+    wget "https://github.com/istio/istio/releases/download/0.8.0/istio-0.8.0-linux.tar.gz"
+    tar -xvf istio-0.8.0-linux.tar.gz
+    export PATH="$PATH:/istio-0.8.0/bin"
+    env
