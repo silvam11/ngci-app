@@ -3,7 +3,7 @@ platform: linux
 
 image_resource:
   type: docker-image
-  source: {repository: 192.168.99.100:5000, tag: ngci/k8tools}
+  source: {repository: "192.168.99.100:5000", tag: ngci/k8tools}
 
 inputs:
 - name: skeleton
