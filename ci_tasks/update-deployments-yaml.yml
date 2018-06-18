@@ -1,0 +1,19 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source: {repository: 192.168.99.100:5000, tag: ngci/k8tools}
+
+inputs:
+- name: skeleton
+
+outputs:
+- name: updated-yaml
+
+run:
+  path: sh
+  args:
+  - -exc
+  - |
+    istioctl kube-inject -f skeleton/deployment.yml > updated-yaml/deployment_istio.yml
