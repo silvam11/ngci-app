@@ -29,7 +29,7 @@ resources:
 #  source:
 #    server: https://192.168.99.100:8443
 #    namespace: default
-#    token: k8s-token))
+#    token: ((k8s-token))
 #    certificate_authority: ((k8s-certificate))
 
 - name: web-gateway-image
@@ -68,6 +68,7 @@ jobs:
     file: skeleton/ci_tasks/task_build_executable.yml
   - put: web-gateway-image
     params:
+      tag: skeleton/version.txt
       build: binaries
 
 - name: job-build-system-model
@@ -83,10 +84,11 @@ jobs:
     file: skeleton/ci_tasks/task_build_executable.yml
   - put: system-model-image
     params:
+      tag: skeleton/version.txt
       build: binaries
 #  - put: k8s
 #    params:
-#      kubectl: run web-gateway --image=ngci/web-gateway:0.1
+#      kubectl: run web-gateway --image=ngci/web-gateway
 #      wait_until_ready: 90
 #      #wait_until_ready_selector: app=test
 #    on_failure:
