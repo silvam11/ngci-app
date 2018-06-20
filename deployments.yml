@@ -15,7 +15,7 @@ spec:
       - env:
         name: web-gateway
         image: ngci/web-gateway:0.1
-        imagePullPolicy: Never
+        #imagePullPolicy: Never
         ports:
           - containerPort: 8080
 
@@ -36,6 +36,6 @@ spec:
       - env:
         name: system-model
         image: ngci/system-model:0.1
-        imagePullPolicy: Never
+        #imagePullPolicy: Never
         ports:
           - containerPort: 9080
