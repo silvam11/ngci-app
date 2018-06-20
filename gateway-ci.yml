@@ -131,7 +131,7 @@ jobs:
     params:
       kubectl: apply -f skeleton/services.yml
       namespace: ngci
-      wait_until_ready_interval: 10
+
     on_failure:
       put: k8s
       params:
@@ -141,7 +141,6 @@ jobs:
     params:
       kubectl: apply -f skeleton/ngci-gateway.yml
       namespace: ngci
-      wait_until_ready_interval: 10
     on_failure:
       put: k8s
       params:
@@ -151,7 +150,6 @@ jobs:
     params:
       kubectl: apply -f skeleton/ngci-virtual-service.yml
       namespace: ngci
-      wait_until_ready_interval: 10
     on_failure:
       put: k8s
       params:
