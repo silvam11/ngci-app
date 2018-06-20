@@ -28,7 +28,7 @@ resources:
   type: kubernetes
   source:
     server: https://192.168.99.100:8443
-    namespace: default
+    namespace: ngci
     token: ((k8stoken))
     certificate_authority: ((k8scertificate))
 
@@ -113,44 +113,50 @@ jobs:
     trigger: true
   - put: k8s
     params:
+#      kubectl: run test --image=192.168.99.100:5000/ngci/web-gateway:0.1
+#      namespace: ngci
+#      wait_until_ready: 90
+
+
       kubectl: apply -f skeleton/deployments.yml
       namespace: ngci
-      wait_until_ready_selector: web-gateway
-      wait_until_ready_selector: system-model
+      wait_until_ready: 90
+      wait_until_ready_selector: app=web-gateway
+      wait_until_ready_selector: app=system-model
     on_failure:
       put: k8s
       params:
         kubectl: delete -f skeleton/deployments.yml
-#  - put: k8s
-#    params:
-#      kubectl: apply -f skeleton/services.yml
-#      namespace: ngci
-#      wait_until_ready_interval: 10
-#    on_failure:
-#      put: k8s
-#      params:
-#        namespace: ngci
-#        kubectl: delete -f skeleton/services.yml
-#  - put: k8s
-#    params:
-#      kubectl: apply -f skeleton/ngci-gateway.yml
-#      namespace: ngci
-#      wait_until_ready_interval: 10
-#    on_failure:
-#      put: k8s
-#      params:
-#        namespace: ngci
-#        kubectl: delete -f skeleton/ngci-gateway.yml
-#  - put: k8s
-#    params:
-#      kubectl: apply -f skeleton/ngci-virtual-service.yml
-#      namespace: ngci
-#      wait_until_ready_interval: 10
-#    on_failure:
-#      put: k8s
-#      params:
-#        namespace: ngci
-#        kubectl: delete -f skeleton/ngci-virtual-service.yml
+  - put: k8s
+    params:
+      kubectl: apply -f skeleton/services.yml
+      namespace: ngci
+      wait_until_ready_interval: 10
+    on_failure:
+      put: k8s
+      params:
+        namespace: ngci
+        kubectl: delete -f skeleton/services.yml
+  - put: k8s
+    params:
+      kubectl: apply -f skeleton/ngci-gateway.yml
+      namespace: ngci
+      wait_until_ready_interval: 10
+    on_failure:
+      put: k8s
+      params:
+        namespace: ngci
+        kubectl: delete -f skeleton/ngci-gateway.yml
+  - put: k8s
+    params:
+      kubectl: apply -f skeleton/ngci-virtual-service.yml
+      namespace: ngci
+      wait_until_ready_interval: 10
+    on_failure:
+      put: k8s
+      params:
+        namespace: ngci
+        kubectl: delete -f skeleton/ngci-virtual-service.yml
 
 
 
