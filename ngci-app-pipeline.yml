@@ -13,6 +13,7 @@ resources:
   source:
     uri: https://github.com/silvam11/ngci-app
     branch: russed5-update
+    check_every: 5m
     skip_ssl_verification: true
 
 # - name: resource-pytest
@@ -27,22 +28,21 @@ resources:
 - name: k8s
   type: kubernetes
   source:
-    server: https://192.168.99.100:8443
-    namespace: ngci
+    server: ((k8s-server))
     token: ((k8stoken))
     certificate_authority: ((k8scertificate))
 
 - name: web-gateway-image
   type: docker-image
   source:
-    repository: 192.168.99.100:5000/ngci/web-gateway
-    insecure_registries: [ "192.168.99.100:5000" ]
+    repository: ((k8s-registry))/ngci/web-gateway
+    insecure_registries: [ "((k8s-registry))" ]
 
 - name: system-model-image
   type: docker-image
   source:
-    repository: 192.168.99.100:5000/ngci/system-model
-    insecure_registries: [ "192.168.99.100:5000" ]
+    repository: ((k8s-registry))/ngci/system-model
+    insecure_registries: [ "((k8s-registry))" ]
 
 jobs:
 # Unit tests need to be written
@@ -86,23 +86,7 @@ jobs:
     params:
       tag: skeleton/version.txt
       build: binaries
-#  - put: k8s
-#    params:
-#      kubectl: run web-gateway --image=ngci/web-gateway
-#      wait_until_ready: 90
-#      #wait_until_ready_selector: app=test
-#    on_failure:
-#      put: k8s
-#      params:
-#        kubectl: delete deploy web-gateway
-#  - put: k8s
-#    params:
-#      kubectl: expose deploy test --port=80 --target-port=8080
-#    on_failure:
-#      put: k8s
-#      params:
-#        kubectl: delete svc test
-#
+
 - name: job-k8s-test
   public: true
   serial: true
@@ -113,11 +97,9 @@ jobs:
     trigger: true
   - put: k8s
     params:
-#      kubectl: run test --image=192.168.99.100:5000/ngci/web-gateway:0.1
-#      namespace: ngci
-#      wait_until_ready: 90
-
-
+      kubectl: apply -f skeleton/namespace.yml
+  - put: k8s
+    params:
       kubectl: apply -f skeleton/deployments.yml
       namespace: ngci
       wait_until_ready: 90
@@ -131,51 +113,14 @@ jobs:
     params:
       kubectl: apply -f skeleton/services.yml
       namespace: ngci
-
-    on_failure:
-      put: k8s
-      params:
-        namespace: ngci
-        kubectl: delete -f skeleton/services.yml
   - put: k8s
     params:
       kubectl: apply -f skeleton/ngci-gateway.yml
       namespace: ngci
-    on_failure:
-      put: k8s
-      params:
-        namespace: ngci
-        kubectl: delete -f skeleton/ngci-gateway.yml
   - put: k8s
     params:
       kubectl: apply -f skeleton/ngci-virtual-service.yml
       namespace: ngci
-    on_failure:
-      put: k8s
-      params:
-        namespace: ngci
-        kubectl: delete -f skeleton/ngci-virtual-service.yml
-
-
-
-
-#- name: job-integration-test
-#  public: true
-#  serial: true
-#  plan:
-#  - get: gitlab_repo
-#    passed: [job-build-deploy]
-#    trigger: true
-#  - task: tests
-#    file: gitlab_repo/ci/task_run_integration_tests.yml
-#    ensure:
-#      do:
-#      - put: k8s
-#        params:
-#          kubectl: delete deploy test
-#      - put: k8s
-#        params:
-#          kubectl: delete svc test
 
 
 # - name: test1
