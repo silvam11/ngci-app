@@ -14,7 +14,7 @@ spec:
       containers:
       - env:
         name: web-gateway
-        image: ((k8s-registry))/ngci/web-gateway:0.1
+        image: 10.234.99.189:30000/ngci/web-gateway:0.1
        # imagePullPolicy: Never
         ports:
           - containerPort: 8080
@@ -35,7 +35,7 @@ spec:
       containers:
       - env:
         name: system-model
-        image: ((k8s-registry))/ngci/system-model:0.1
+        image: 10.234.99.189:30000/ngci/system-model:0.1
        # imagePullPolicy: Never
         ports:
           - containerPort: 9080

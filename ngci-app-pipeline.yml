@@ -100,6 +100,7 @@ jobs:
       kubectl: apply -f skeleton/namespace.yml
   - put: k8s
     params:
+
       kubectl: apply -f skeleton/deployments.yml
       namespace: ngci
       wait_until_ready: 90
